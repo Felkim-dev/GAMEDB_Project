@@ -7,7 +7,7 @@ class PlayerSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model=Player
         sqla_session=db.session
-    player_id=fields.Integer(dump_only=True)
-    username=fields.String(required=True)
-    email=fields.String(required=True)
-    registration_date=fields.Date(required=True)
+    PlayerID=fields.Integer(dump_only=True)
+    UserName=fields.String(required=True)
+    Email=fields.String(required=True)
+    RegistrationDate=fields.Date(required=True)
