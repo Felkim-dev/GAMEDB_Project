@@ -6,6 +6,8 @@ class Player(db.Model):
     UserName=db.Column(db.String(50), nullable=False)
     Email=db.Column(db.String(50), nullable=False)
     RegistrationDate=db.Column(db.Date, nullable=False)
+    #backreference a Character, prueba
+    Character=db.relationship('Character',backref='Player')
 
     def __init__(self,UserName,Email,RegistrationDate):
         self.UserName=UserName
