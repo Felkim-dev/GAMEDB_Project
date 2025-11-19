@@ -2,14 +2,14 @@ from app.extensions import db
 
 class Player(db.Model):
     __tablename__ = "Player"
-    player_id=db.Column(db.Integer, primary_key=True)
-    username=db.Column(db.String(50), nullable=False)
-    email=db.Column(db.String(50), nullable=False)
-    registration_date=db.Column(db.Date, nullable=False)
+    PlayerID=db.Column(db.Integer, primary_key=True)
+    UserName=db.Column(db.String(50), nullable=False)
+    Email=db.Column(db.String(50), nullable=False)
+    RegistrationDate=db.Column(db.Date, nullable=False)
 
-    def __init__(self,username,email,registration_date):
-        self.username=username
-        self.email=email
-        self.registration_date=registration_date
+    def __init__(self,UserName,Email,RegistrationDate):
+        self.UserName=UserName
+        self.Email=Email
+        self.RegistrationDate=RegistrationDate
     
     #TODO: definir el def create en la carpeta services para estructura mas limpia
