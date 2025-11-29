@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS GAME_DATABASE;
 USE GAME_DATABASE;
 
 -- Tablas principales
-CREATE TABLE Player (
+CREATE TABLE `Player` (
     PlayerID INT NOT NULL AUTO_INCREMENT,
     UserName VARCHAR(50) NOT NULL UNIQUE,
     Email VARCHAR(100) NOT NULL UNIQUE,
@@ -12,7 +12,7 @@ CREATE TABLE Player (
     INDEX idx_username (UserName)
 );
 
-CREATE TABLE Character (
+CREATE TABLE `Character` (
     CharacterID INT NOT NULL AUTO_INCREMENT,
     PlayerID INT NOT NULL,
     Name VARCHAR(50) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE Character (
     INDEX idx_level (Level)
 );
 
-CREATE TABLE Mission (
+CREATE TABLE `Mission` (
     MissionID INT NOT NULL AUTO_INCREMENT,
     Title VARCHAR(100) NOT NULL,
     Description VARCHAR(1000) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE Mission (
     INDEX idx_difficulty (Difficulty)
 );
 
-CREATE TABLE Item (
+CREATE TABLE `Item` (
     ItemID INT NOT NULL AUTO_INCREMENT,
     Name VARCHAR(50) NOT NULL,
     Type ENUM('Arma', 'Armadura', 'Comestible', 'Coleccionables') NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Item (
 );
 
 -- Tablas de relación
-CREATE TABLE CharacterMission (
+CREATE TABLE `CharacterMission` (
     CharacterID INT NOT NULL,
     MissionID INT NOT NULL,
     Status ENUM('Incomplete', 'In Progress', 'Complete') NOT NULL DEFAULT 'Incomplete',
@@ -53,7 +53,7 @@ CREATE TABLE CharacterMission (
     INDEX idx_status (Status)
 );
 
-CREATE TABLE Inventory (
+CREATE TABLE `Inventory` (
     CharacterID INT NOT NULL,
     ItemID INT NOT NULL,
     Quantity INT NOT NULL DEFAULT 1 CHECK (Quantity >= 0),
@@ -62,7 +62,7 @@ CREATE TABLE Inventory (
 );
 
 -- Tabla de transacciones con conexión directa
-CREATE TABLE Transaction (
+CREATE TABLE `Transaction` (
     TransactionID INT NOT NULL AUTO_INCREMENT,
     ItemID INT NOT NULL,
     GiverID INT NOT NULL,
@@ -81,43 +81,43 @@ CREATE TABLE Transaction (
 );
 
 -- Foreign Keys
-ALTER TABLE Character 
+ALTER TABLE `Character` 
 ADD CONSTRAINT fk_character_player
-FOREIGN KEY (PlayerID) REFERENCES Player(PlayerID)
+FOREIGN KEY (PlayerID) REFERENCES `Player`(PlayerID)
 ON DELETE CASCADE;
 
-ALTER TABLE CharacterMission 
+ALTER TABLE `CharacterMission` 
 ADD CONSTRAINT fk_cm_character
-FOREIGN KEY (CharacterID) REFERENCES Character(CharacterID)
+FOREIGN KEY (CharacterID) REFERENCES `Character`(CharacterID)
 ON DELETE CASCADE;
 
-ALTER TABLE CharacterMission 
+ALTER TABLE `CharacterMission` 
 ADD CONSTRAINT fk_cm_mission
-FOREIGN KEY (MissionID) REFERENCES Mission(MissionID)
+FOREIGN KEY (MissionID) REFERENCES `Mission`(MissionID)
 ON DELETE CASCADE;
 
-ALTER TABLE Inventory 
+ALTER TABLE `Inventory` 
 ADD CONSTRAINT fk_inventory_character
-FOREIGN KEY (CharacterID) REFERENCES Character(CharacterID)
+FOREIGN KEY (CharacterID) REFERENCES `Character`(CharacterID)
 ON DELETE CASCADE;
 
-ALTER TABLE Inventory 
+ALTER TABLE `Inventory` 
 ADD CONSTRAINT fk_inventory_item
-FOREIGN KEY (ItemID) REFERENCES Item(ItemID)
+FOREIGN KEY (ItemID) REFERENCES `Item`(ItemID)
 ON DELETE CASCADE;
 
 -- Conexiones directas de Transaction con Character
-ALTER TABLE Transaction 
+ALTER TABLE `Transaction` 
 ADD CONSTRAINT fk_transaction_giver
-FOREIGN KEY (GiverID) REFERENCES Character(CharacterID)
+FOREIGN KEY (GiverID) REFERENCES `Character`(CharacterID)
 ON DELETE RESTRICT;
 
-ALTER TABLE Transaction 
+ALTER TABLE `Transaction` 
 ADD CONSTRAINT fk_transaction_receiver
-FOREIGN KEY (ReceiverID) REFERENCES Character(CharacterID)
+FOREIGN KEY (ReceiverID) REFERENCES `Character`(CharacterID)
 ON DELETE RESTRICT;
 
-ALTER TABLE Transaction 
+ALTER TABLE `Transaction` 
 ADD CONSTRAINT fk_transaction_item
-FOREIGN KEY (ItemID) REFERENCES Item(ItemID)
+FOREIGN KEY (ItemID) REFERENCES `Item`(ItemID)
 ON DELETE RESTRICT;
