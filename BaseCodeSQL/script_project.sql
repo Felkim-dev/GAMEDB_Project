@@ -101,18 +101,23 @@ ADD CONSTRAINT fk_inventory_character
 FOREIGN KEY (CharacterID) REFERENCES `Character`(CharacterID)
 ON DELETE CASCADE;
 
-ALTER TABLE Inventory 
-ADD CONSTRAINT character_inventory_fk
-FOREIGN KEY (CharacterID) REFERENCES Character_1(CharacterID);
+ALTER TABLE `Inventory` 
+ADD CONSTRAINT fk_inventory_item
+FOREIGN KEY (ItemID) REFERENCES `Item`(ItemID)
+ON DELETE CASCADE;
 
-ALTER TABLE CharacterMission 
-ADD CONSTRAINT character_charactermission_fk
-FOREIGN KEY (CharacterID) REFERENCES Character_1(CharacterID);
+-- Conexiones directas de Transaction con Character
+ALTER TABLE `Transaction` 
+ADD CONSTRAINT fk_transaction_giver
+FOREIGN KEY (GiverID) REFERENCES `Character`(CharacterID)
+ON DELETE CASCADE;
 
-ALTER TABLE Transaction 
-ADD CONSTRAINT receiver_transaction_fk
-FOREIGN KEY (ReceiverID) REFERENCES Character_1(CharacterID);
+ALTER TABLE `Transaction` 
+ADD CONSTRAINT fk_transaction_receiver
+FOREIGN KEY (ReceiverID) REFERENCES `Character`(CharacterID)
+ON DELETE CASCADE;
 
-ALTER TABLE Transaction 
-ADD CONSTRAINT giver_transaction_fk
-FOREIGN KEY (GiverID) REFERENCES Character_1(CharacterID);
+ALTER TABLE `Transaction` 
+ADD CONSTRAINT fk_transaction_item
+FOREIGN KEY (ItemID) REFERENCES `Item`(ItemID)
+ON DELETE CASCADE;
