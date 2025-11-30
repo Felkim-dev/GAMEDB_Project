@@ -34,17 +34,6 @@ CREATE TABLE Character_1 (
     PRIMARY KEY (CharacterID)
 );
 
--- Tablas intermedias (ReceiverID = CharacterID)
-CREATE TABLE Receiver (
-    ReceiverID INT NOT NULL,
-    PRIMARY KEY (ReceiverID)
-);
-
-CREATE TABLE Giver (
-    GiverID INT NOT NULL,
-    PRIMARY KEY (GiverID)
-);
-
 CREATE TABLE Transaction (
     TransactionID INT NOT NULL AUTO_INCREMENT,
     ItemID INT NOT NULL,
@@ -94,18 +83,10 @@ ALTER TABLE CharacterMission
 ADD CONSTRAINT character_charactermission_fk
 FOREIGN KEY (CharacterID) REFERENCES Character_1(CharacterID);
 
-ALTER TABLE Giver 
-ADD CONSTRAINT character_1_giver_fk
-FOREIGN KEY (GiverID) REFERENCES Character_1(CharacterID);
-
-ALTER TABLE Receiver 
-ADD CONSTRAINT character_1_receiver_fk
+ALTER TABLE Transaction 
+ADD CONSTRAINT receiver_transaction_fk
 FOREIGN KEY (ReceiverID) REFERENCES Character_1(CharacterID);
 
 ALTER TABLE Transaction 
-ADD CONSTRAINT receiver_transaction_fk
-FOREIGN KEY (ReceiverID) REFERENCES Receiver(ReceiverID);
-
-ALTER TABLE Transaction 
 ADD CONSTRAINT giver_transaction_fk
-FOREIGN KEY (GiverID) REFERENCES Giver(GiverID);
+FOREIGN KEY (GiverID) REFERENCES Character_1(CharacterID);

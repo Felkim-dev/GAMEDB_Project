@@ -8,6 +8,9 @@ class Mission(db.Model):
     Description=db.Column(db.String(1000), nullable=False)
     Difficulty=db.Column(db.Integer, nullable=False)
 
+    #Relaciones
+    characters_link = db.relationship("CharacterMission", back_populates="mission")
+    
     #metodo para instanciar un objeto de tipo Character
     def __init__(self,Title,Description,Difficulty):
         self.Title=Title 
