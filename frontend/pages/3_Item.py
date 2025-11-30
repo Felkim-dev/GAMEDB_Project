@@ -36,7 +36,7 @@ with tab1:
     items = api.get_items()
 
     if "error" in items:
-        st.error(f"❌ Error al cargar lositems: {items['error']}")
+        st.error(f"❌ Error al cargar los items: {items['error']}")
     elif not items["items"]:
         st.info("ℹ️ No hay items registrados todavía.")
     else:
