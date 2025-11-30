@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+API/app/__pycache__
+API/models/__pycache__
+API/routes/__pycache__
+API/schemas/__pycache__
+API/services/__pycache__
+
+# Streamlit
+.streamlit/
+
+# Environment variables
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Docker
+DockerFiles/.env

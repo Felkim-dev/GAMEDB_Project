@@ -2,7 +2,7 @@ from app.extensions import db
 
 class Character(db.Model):
     # TODO: definir la clase
-    __tablename__="Character_1"
+    __tablename__="Character"
     CharacterID=db.Column(db.Integer, primary_key=True)
     PlayerID=db.Column(db.Integer, db.ForeignKey("Player.PlayerID"))
     Name=db.Column(db.String(50), nullable=False)
