@@ -31,14 +31,12 @@ with tab1:
 
     players = api.get_players()
 
-    print(players)
-
     if "error" in players:
         st.error(f"❌ Error al cargar jugadores: {players['error']}")
-    elif not players:
+    elif not players["players"]:
         st.info("ℹ️ No hay jugadores registrados todavía.")
     else:
-        
+
         df = pd.DataFrame(players["players"])
         # Cambia este orden según tu preferencia
         column_order = ["PlayerID", "UserName", "Email", "RegistrationDate"]
@@ -47,25 +45,8 @@ with tab1:
         # Mostrar jugadores en formato de tabla
         st.dataframe(
             df,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
-            column_config={
-                "PlayerID": st.column_config.NumberColumn(
-                    "ID", help="ID único del jugador", width="small"
-                ),
-                "UserName": st.column_config.TextColumn(
-                    "Usuario", help="Nombre de usuario", width="medium"
-                ),
-                "Email": st.column_config.TextColumn(
-                    "Correo Electrónico", help="Email del jugador", width="medium"
-                ),
-                "RegistrationDate": st.column_config.DateColumn(
-                    "Fecha de Registro",
-                    help="Fecha en que se registró",
-                    format="DD/MM/YYYY",
-                    width="medium",
-                ),
-            },
         )
 
         st.success(f"✅ Total de jugadores: {len(players['players'])}")
@@ -85,7 +66,7 @@ with tab2:
 
         registration_date = st.date_input("Fecha de Registro*")
 
-        submitted = st.form_submit_button("➕ Crear Jugador", use_container_width=True)
+        submitted = st.form_submit_button("➕ Crear Jugador", width="stretch")
 
         if submitted:
             if not username or not email:
@@ -114,8 +95,8 @@ with tab3:
 
     players = api.get_players()
 
-    if "error" not in players and players:
-    
+    if "error" not in players and players["players"]:
+
         # Selector de jugador
         player_options = {
             f"{p['PlayerID']} - {p['UserName']}": p["PlayerID"] for p in players["players"]
@@ -144,7 +125,7 @@ with tab3:
                         )
 
                         update_submitted = st.form_submit_button(
-                            "💾 Actualizar", use_container_width=True
+                            "💾 Actualizar", width="stretch"
                         )
 
                         if update_submitted:
@@ -173,7 +154,7 @@ with tab3:
                     if st.button(
                         "🗑️ Eliminar Jugador",
                         disabled=not confirm,
-                        use_container_width=True,
+                        width="stretch",
                     ):
                         result = api.delete_player(player_id)
 

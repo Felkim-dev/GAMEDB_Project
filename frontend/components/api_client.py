@@ -68,7 +68,7 @@ class APIClient:
 
     def get_characters(self) -> List[Dict]:
         """Obtiene todos los personajes"""
-        return self._make_request("GET", "characters")
+        return self._make_request("GET", "characters/")
 
     def get_character(self, character_id: int) -> Dict:
         """Obtiene un personaje específico por ID"""
