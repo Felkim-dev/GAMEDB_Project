@@ -1,37 +1,26 @@
-CREATE DATABASE GAME_DATABASE;
+CREATE DATABASE IF NOT EXISTS GAME_DATABASE;
 USE GAME_DATABASE;
 
-CREATE TABLE Mission (
-    MissionID INT NOT NULL AUTO_INCREMENT,
-    Title VARCHAR(100) NOT NULL,
-    Description VARCHAR(1000) NOT NULL,
-    Difficulty INT NOT NULL,
-    PRIMARY KEY (MissionID)
-);
-
-CREATE TABLE Item (
-    ItemID INT NOT NULL AUTO_INCREMENT,
-    Name VARCHAR(50) NOT NULL,
-    Type INT NOT NULL,
-    Rarity INT NOT NULL,
-    PRIMARY KEY (ItemID)
-);
-
-CREATE TABLE Player (
+-- Tablas principales
+CREATE TABLE `Player` (
     PlayerID INT NOT NULL AUTO_INCREMENT,
-    UserName VARCHAR(50) NOT NULL,
-    Email VARCHAR(50) NOT NULL,
+    UserName VARCHAR(50) NOT NULL UNIQUE,
+    Email VARCHAR(100) NOT NULL UNIQUE,
     RegistrationDate DATE NOT NULL,
-    PRIMARY KEY (PlayerID)
+    PRIMARY KEY (PlayerID),
+    INDEX idx_email (Email),
+    INDEX idx_username (UserName)
 );
 
-CREATE TABLE Character_1 (
+CREATE TABLE `Character` (
     CharacterID INT NOT NULL AUTO_INCREMENT,
     PlayerID INT NOT NULL,
     Name VARCHAR(50) NOT NULL,
-    Level INT NOT NULL,
-    Experience INT NOT NULL,
-    PRIMARY KEY (CharacterID)
+    Level INT NOT NULL DEFAULT 1 CHECK (Level > 0),
+    Experience INT NOT NULL DEFAULT 0 CHECK (Experience >= 0),
+    PRIMARY KEY (CharacterID),
+    INDEX idx_player (PlayerID),
+    INDEX idx_level (Level)
 );
 
 CREATE TABLE Transaction (
@@ -44,18 +33,23 @@ CREATE TABLE Transaction (
     PRIMARY KEY (TransactionID)
 );
 
-CREATE TABLE CharacterMission (
+-- Tablas de relación
+CREATE TABLE `CharacterMission` (
     CharacterID INT NOT NULL,
     MissionID INT NOT NULL,
-    Status INT NOT NULL,
-    PRIMARY KEY (CharacterID, MissionID)
+    Status ENUM('Incomplete', 'In Progress', 'Complete') NOT NULL DEFAULT 'Incomplete',
+    StartDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CompletionDate DATETIME NULL,
+    PRIMARY KEY (CharacterID, MissionID),
+    INDEX idx_status (Status)
 );
 
-CREATE TABLE Inventory (
+CREATE TABLE `Inventory` (
     CharacterID INT NOT NULL,
     ItemID INT NOT NULL,
-    Quantity INT NOT NULL,
-    PRIMARY KEY (CharacterID, ItemID)  -- Corregido
+    Quantity INT NOT NULL DEFAULT 1 CHECK (Quantity >= 0),
+    AcquiredDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (CharacterID, ItemID)
 );
 
 -- Foreign Keys
