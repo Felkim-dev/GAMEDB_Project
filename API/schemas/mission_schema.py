@@ -10,4 +10,4 @@ class MissionSchema(SQLAlchemyAutoSchema):
     MissionID=fields.Integer(dump_only=True)
     Title=fields.String(required=True)
     Description=fields.String(required=True)
-    Difficulty=fields.Integer(required=True)
+    Difficulty=fields.String(required=True)
