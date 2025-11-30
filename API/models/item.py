@@ -5,8 +5,8 @@ class Item(db.Model):
     __tablename__="Item"
     ItemID=db.Column(db.Integer, primary_key=True)
     Name=db.Column(db.String(50), nullable=False)
-    Type=db.Column(db.Integer, nullable=False)
-    Rarity=db.Column(db.Integer, nullable=False)
+    Type=db.Column(db.Enum('Arma', 'Armadura', 'Comestible', 'Coleccionables'), nullable=False)
+    Rarity=db.Column(db.Enum('Common', 'Special', 'Epic', 'Legendary'), nullable=False)
 
     #Relaciones
     inventory_items = db.relationship("Inventory", back_populates="item")

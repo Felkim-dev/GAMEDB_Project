@@ -2,9 +2,9 @@ from app.extensions import db
 
 class CharacterMission(db.Model):
     __tablename__="CharacterMission"
-    CharacterID=db.Column(db.Integer, db.ForeignKey('Character.CharacterID'),primary_key=True)
-    MissionID=db.Column(db.Integer, db.ForeignKey('Mission.MissionID'), primary_key=True)
-    Status=db.Column(db.Integer, nullable=False)
+    CharacterID=db.Column(db.Integer, db.ForeignKey('Character.CharacterID',ondelete="CASCADE"),primary_key=True)
+    MissionID=db.Column(db.Integer, db.ForeignKey('Mission.MissionID',ondelete="CASCADE"), primary_key=True)
+    Status=db.Column(db.Enum('Incomplete', 'In Progress', 'Complete'), nullable=False)
 
     #Relaciones
     char_mission = db.relationship("Character", back_populates="missions_link")

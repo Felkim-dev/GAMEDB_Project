@@ -7,7 +7,7 @@ class Player(db.Model):
     Email=db.Column(db.String(50), nullable=False)
     RegistrationDate=db.Column(db.Date, nullable=False)
     #backreference a Character, prueba
-    characters=db.relationship('Character',back_populates='player')
+    characters=db.relationship('Character',back_populates='player',passive_deletes=True)
 
     def __init__(self,UserName,Email,RegistrationDate):
         self.UserName=UserName

@@ -11,7 +11,8 @@ def create_player(data):
         db.session.commit()
         return player
     except Exception as e:
-        db.session.rollback()    
+        db.session.rollback()   
+        return e 
 
 def update_player(PlayerID, data):
     player=Player.query.get(PlayerID)

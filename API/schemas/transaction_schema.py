@@ -1,4 +1,4 @@
-from marshmallow import fields
+from marshmallow import fields, validate
 from flask_marshmallow.sqla import SQLAlchemyAutoSchema
 from models.transaction import Transaction
 from app.extensions import db
@@ -13,4 +13,5 @@ class TransactionSchema(SQLAlchemyAutoSchema):
     ReceiverID=fields.Integer(required=True)
     ItemID=fields.Integer(required=True)
     TransactionDate=fields.Date(required=True)
-    TransactionType=fields.Integer(required=True)
+    TransactionType=fields.String(required=True,
+                                  validate=validate.OneOf(['Trade', 'Purchase', 'Donation']))
