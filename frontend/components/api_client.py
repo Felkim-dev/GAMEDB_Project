@@ -130,6 +130,80 @@ class APIClient:
         """Elimina una misión"""
         return self._make_request("DELETE", f"missions/{mission_id}")
 
+    # ==================== TRANSACTIONS ====================
+
+    def get_transactions(self) -> List[Dict]:
+        """Obtiene todas las transacciones"""
+        return self._make_request("GET", "transactions")
+
+    def get_transaction(self, transaction_id: int) -> Dict:
+        """Obtiene una transacción específica por ID"""
+        return self._make_request("GET", f"transactions/{transaction_id}")
+
+    def create_transaction(self, data: Dict) -> Dict:
+        """Crea una nueva transacción"""
+        return self._make_request("POST", "transactions", data)
+
+    def update_transaction(self, transaction_id: int, data: Dict) -> Dict:
+        """Actualiza una transacción existente"""
+        return self._make_request("PUT", f"transactions/{transaction_id}", data)
+
+    def delete_transaction(self, transaction_id: int) -> Dict:
+        """Elimina una transacción"""
+        return self._make_request("DELETE", f"transactions/{transaction_id}")
+
+    # ==================== INVENTORY ====================
+
+    def get_inventories(self) -> List[Dict]:
+        """Obtiene todos los inventarios"""
+        return self._make_request("GET", "inventory")
+
+    def get_inventory(self, character_id: int, item_id: int) -> Dict:
+        """Obtiene un inventario específico por CharacterID e ItemID"""
+        return self._make_request("GET", f"inventory/{character_id}/{item_id}")
+
+    def create_inventory(self, data: Dict) -> Dict:
+        """Crea un nuevo registro de inventario"""
+        return self._make_request("POST", "inventory", data)
+
+    def update_inventory(self, character_id: int, item_id: int, data: Dict) -> Dict:
+        """Actualiza un inventario existente"""
+        return self._make_request("PUT", f"inventory/{character_id}/{item_id}", data)
+
+    def delete_inventory(self, character_id: int, item_id: int) -> Dict:
+        """Elimina un registro de inventario"""
+        return self._make_request("DELETE", f"inventory/{character_id}/{item_id}")
+
+    # ==================== CHARACTER MISSION ====================
+
+    def get_character_missions(self) -> List[Dict]:
+        """Obtiene todas las asignaciones de misiones a personajes"""
+        return self._make_request("GET", "char_missions")
+
+    def get_character_mission(self, character_id: int, mission_id: int) -> Dict:
+        """Obtiene una asignación específica por CharacterID y MissionID"""
+        return self._make_request(
+            "GET", f"char_missions/{character_id}/{mission_id}"
+        )
+
+    def create_character_mission(self, data: Dict) -> Dict:
+        """Crea una nueva asignación de misión a personaje"""
+        return self._make_request("POST", "char_missions", data)
+
+    def update_character_mission(
+        self, character_id: int, mission_id: int, data: Dict
+    ) -> Dict:
+        """Actualiza una asignación de misión existente"""
+        return self._make_request(
+            "PUT", f"char_missions/{character_id}/{mission_id}", data
+        )
+
+    def delete_character_mission(self, character_id: int, mission_id: int) -> Dict:
+        """Elimina una asignación de misión"""
+        return self._make_request(
+            "DELETE", f"char_missions/{character_id}/{mission_id}"
+        )
+
     # ==================== HEALTH CHECK ====================
 
     def health_check(self) -> Dict:

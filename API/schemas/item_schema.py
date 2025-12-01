@@ -3,6 +3,7 @@ from flask_marshmallow.sqla import SQLAlchemyAutoSchema
 from models.item import Item
 from app.extensions import db
 
+
 class ItemSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
         model=Item
