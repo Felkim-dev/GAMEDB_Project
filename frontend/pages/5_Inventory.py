@@ -55,7 +55,7 @@ if (
             # Mostrar en formato de tabla
             st.dataframe(
                 df,
-                use_container_width=True,
+                width='stretch',
                 hide_index=True,
             )
 
@@ -105,7 +105,7 @@ if (
 
             # Botón de submit
             submitted = st.form_submit_button(
-                "➕ Crear Inventario", use_container_width=True
+                "➕ Crear Inventario", width='stretch'
             )
 
             if submitted:
@@ -165,7 +165,7 @@ if (
                             )
 
                             update_submitted = st.form_submit_button(
-                                "💾 Actualizar", use_container_width=True
+                                "💾 Actualizar", width='stretch'
                             )
 
                             if update_submitted:
@@ -197,7 +197,7 @@ if (
                         if st.button(
                             "🗑️ Eliminar Inventario",
                             disabled=not confirm,
-                            use_container_width=True,
+                            width='stretch',
                         ):
                             result = api.delete_inventory(character_id, item_id)
 

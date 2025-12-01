@@ -23,14 +23,17 @@ Usa el menú de la izquierda para navegar entre las diferentes secciones:
 - **👥 Players** - Gestiona los jugadores registrados
 - **🦸 Characters** - Administra los personajes de cada jugador
 - **⚔️ Items** - Catálogo de items disponibles
-- **🎯 Missions** - Sistema de misiones
 - **💱 Transactions** - Registro de transacciones entre personajes
+- **🎒 Inventory** - Gestión de inventarios de personajes
+- **🎯 Missions** - Sistema de misiones
+- **🎯 Character Missions** - Asignación de misiones a personajes
 
 ### 🚀 Instrucciones:
 
 1. Asegúrate de que la API Flask esté corriendo en `http://localhost:5000`
 2. Asegúrate de que el contenedor Docker de MySQL esté activo
 3. Navega por las páginas usando el menú lateral
+4. Comienza creando jugadores, luego personajes, y después items/misiones
 
 ### 📝 Estado del Sistema:
 """

@@ -178,30 +178,30 @@ class APIClient:
 
     def get_character_missions(self) -> List[Dict]:
         """Obtiene todas las asignaciones de misiones a personajes"""
-        return self._make_request("GET", "character-missions")
+        return self._make_request("GET", "char_missions")
 
     def get_character_mission(self, character_id: int, mission_id: int) -> Dict:
         """Obtiene una asignación específica por CharacterID y MissionID"""
         return self._make_request(
-            "GET", f"character-missions/{character_id}/{mission_id}"
+            "GET", f"char_missions/{character_id}/{mission_id}"
         )
 
     def create_character_mission(self, data: Dict) -> Dict:
         """Crea una nueva asignación de misión a personaje"""
-        return self._make_request("POST", "character-missions", data)
+        return self._make_request("POST", "char_missions", data)
 
     def update_character_mission(
         self, character_id: int, mission_id: int, data: Dict
     ) -> Dict:
         """Actualiza una asignación de misión existente"""
         return self._make_request(
-            "PUT", f"character-missions/{character_id}/{mission_id}", data
+            "PUT", f"char_missions/{character_id}/{mission_id}", data
         )
 
     def delete_character_mission(self, character_id: int, mission_id: int) -> Dict:
         """Elimina una asignación de misión"""
         return self._make_request(
-            "DELETE", f"character-missions/{character_id}/{mission_id}"
+            "DELETE", f"char_missions/{character_id}/{mission_id}"
         )
 
     # ==================== HEALTH CHECK ====================

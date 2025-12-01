@@ -1,7 +1,8 @@
-from marshmallow import fields,validate
+from marshmallow import fields, validate
 from flask_marshmallow.sqla import SQLAlchemyAutoSchema
 from models.char_mission import CharacterMission
 from app.extensions import db
+
 
 class CharacterMissionSchema(SQLAlchemyAutoSchema):
     class Meta(SQLAlchemyAutoSchema.Meta):
@@ -11,5 +12,9 @@ class CharacterMissionSchema(SQLAlchemyAutoSchema):
 
     CharacterID = fields.Integer(required=True)
     MissionID = fields.Integer(required=True)
-    Status = fields.Integer(required=True,
-                            validate=validate.OneOf(['Incomplete', 'In Progress', 'Complete']))
+    Status = fields.String(
+        required=True,
+        validate=validate.OneOf(["Incomplete", "In Progress", "Complete"]),
+    )
+    StartDate = fields.DateTime(allow_none=True)
+    CompletionDate = fields.DateTime(allow_none=True)
