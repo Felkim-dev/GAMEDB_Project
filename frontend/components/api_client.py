@@ -3,13 +3,17 @@ Cliente API para conectar el frontend de Streamlit con la API Flask
 """
 
 import requests
+import os
 from typing import Dict, List, Optional
 
 
 class APIClient:
     """Cliente para realizar peticiones HTTP a la API Flask"""
 
-    def __init__(self, base_url: str = "http://localhost:5000"):
+    def __init__(self, base_url: str = None):
+        # Usar variable de entorno si está disponible, sino usar localhost
+        if base_url is None:
+            base_url = os.getenv("API_URL", "http://localhost:5000")
         self.base_url = base_url
 
     def _make_request(
