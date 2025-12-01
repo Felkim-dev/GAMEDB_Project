@@ -1,29 +1,70 @@
 version: '3.8'
 
 services:
+  # Base de datos MySQL
   mysql:
-    build:
-      context: ..
-      dockerfile: DockerFiles/Dockerfile
+    image: mysql:latest
     container_name: gamedb_mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: GAME_DATABASE
-      MYSQL_USER: gameuser
-      MYSQL_PASSWORD: gamepassword
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-GAME_DATABASE}
+      MYSQL_USER: ${MYSQL_USER:-gameuser}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-gamepassword}
     ports:
-      - "8080:3306"  # Puerto 8080 en host -> 3306 en contenedor
+      - "${MYSQL_PORT:-8080}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ../BaseCodeSQL/script_project.sql:/docker-entrypoint-initdb.d/script_project.sql
+      - ../BaseCodeSQL/script_project.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ../BaseCodeSQL/Test_data.sql:/docker-entrypoint-initdb.d/02-data.sql
     networks:
       - gamedb_network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # API Flask
+  api:
+    build:
+      context: ..
+      dockerfile: DockerFiles/Dockerfile.api
+    container_name: gamedb_api
+    restart: always
+    environment:
+      - FLASK_APP=run.py
+      - FLASK_ENV=production
+      - DATABASE_URL=mysql+pymysql://${MYSQL_USER:-gameuser}:${MYSQL_PASSWORD:-gamepassword}@mysql:3306/${MYSQL_DATABASE:-GAME_DATABASE}
+    ports:
+      - "${API_PORT:-5000}:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - gamedb_network
+    volumes:
+      - ../API:/app
+    command: python run.py
+
+  # Frontend Streamlit
+  frontend:
+    build:
+      context: ..
+      dockerfile: DockerFiles/Dockerfile.frontend
+    container_name: gamedb_frontend
+    restart: always
+    environment:
+      - API_URL=http://api:5000
+    ports:
+      - "${FRONTEND_PORT:-8501}:8501"
+    depends_on:
+      - api
+    networks:
+      - gamedb_network
+    volumes:
+      - ../frontend:/app
+    command: streamlit run main.py --server.address=0.0.0.0
 
 volumes:
   mysql_data:

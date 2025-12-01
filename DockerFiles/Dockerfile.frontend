@@ -1,0 +1,22 @@
+FROM python:3.11-slim
+
+# Establecer directorio de trabajo
+WORKDIR /app
+
+# Copiar archivo de requisitos
+COPY frontend/requirements.txt .
+
+# Instalar dependencias
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar el código del frontend
+COPY frontend/ .
+
+# Exponer el puerto de Streamlit
+EXPOSE 8501
+
+# Variables de entorno
+ENV PYTHONUNBUFFERED=1
+
+# Comando para ejecutar Streamlit
+CMD ["streamlit", "run", "main.py", "--server.address=0.0.0.0", "--server.port=8501"]
