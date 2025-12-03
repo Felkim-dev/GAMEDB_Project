@@ -208,6 +208,40 @@ class APIClient:
             "DELETE", f"char_missions/{character_id}/{mission_id}"
         )
 
+    # ==================== REPORTS (JOINS) ====================
+
+    def get_available_reports(self) -> Dict:
+        """Obtiene la lista de reportes disponibles"""
+        return self._make_request("GET", "reports/")
+
+    def get_characters_with_players(self) -> Dict:
+        """Reporte: Personajes con información de sus jugadores"""
+        return self._make_request("GET", "reports/characters-with-players")
+
+    def get_inventory_details(self) -> Dict:
+        """Reporte: Inventario detallado con información completa"""
+        return self._make_request("GET", "reports/inventory-details")
+
+    def get_missions_progress(self) -> Dict:
+        """Reporte: Progreso de todas las misiones"""
+        return self._make_request("GET", "reports/missions-progress")
+
+    def get_transactions_details(self) -> Dict:
+        """Reporte: Transacciones con nombres de personajes e items"""
+        return self._make_request("GET", "reports/transactions-details")
+
+    def get_player_statistics(self) -> Dict:
+        """Reporte: Estadísticas agregadas por jugador"""
+        return self._make_request("GET", "reports/player-statistics")
+
+    def get_character_profile(self, character_id: int) -> Dict:
+        """Reporte: Perfil completo de un personaje específico"""
+        return self._make_request("GET", f"reports/character-profile/{character_id}")
+
+    def get_items_distribution(self) -> Dict:
+        """Reporte: Distribución de items en el juego"""
+        return self._make_request("GET", "reports/items-distribution")
+
     # ==================== HEALTH CHECK ====================
 
     def health_check(self) -> Dict:
