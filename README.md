@@ -7,7 +7,6 @@ Sistema completo de gestión de base de datos para videojuegos RPG, desarrollado
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.29-red)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-orange)
 ![Docker](https://img.shields.io/badge/Docker-Compose-blue)
-![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ## 📋 Tabla de Contenidos
 
