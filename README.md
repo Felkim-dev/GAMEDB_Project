@@ -164,8 +164,8 @@ Transaction (Transacciones entre personajes)
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/game-database-manager.git
-cd game-database-manager
+git https://github.com/Felkim-dev/GAMEDB_Project.git
+cd GAMEDB_Project
 
 # 2. Navegar a la carpeta de Docker
 cd DockerFiles
@@ -395,9 +395,7 @@ http://localhost:5000
 | GET | `/reports/inventory-details` | JOIN Inventory + Character + Item + Player |
 | GET | `/reports/missions-progress` | JOIN CharacterMission + Character + Mission + Player |
 | GET | `/reports/transactions-details` | JOIN Transaction + Characters + Item |
-| GET | `/reports/player-statistics` | Estadísticas agregadas (GROUP BY) |
 | GET | `/reports/character-profile/<id>` | Perfil completo de personaje |
-| GET | `/reports/items-distribution` | Distribución de items (GROUP BY) |
 
 ### Ejemplo de Petición
 
@@ -482,42 +480,12 @@ INNER JOIN Character cr ON t.ReceiverID = cr.CharacterID
 INNER JOIN Item i ON t.ItemID = i.ItemID
 ```
 
-### 5. Estadísticas por Jugador
-**GROUP BY con Agregaciones**
-
-Métricas agregadas de cada jugador (COUNT, SUM, AVG, MAX).
-
-```sql
-SELECT 
-    p.PlayerID, p.UserName, p.Email,
-    COUNT(c.CharacterID) AS TotalCharacters,
-    COALESCE(SUM(c.Level), 0) AS TotalLevels,
-    COALESCE(AVG(c.Level), 0) AS AverageLevel,
-    COALESCE(MAX(c.Level), 0) AS MaxLevel
-FROM Player p
-LEFT JOIN Character c ON p.PlayerID = c.PlayerID
-GROUP BY p.PlayerID, p.UserName, p.Email
-```
-
-### 6. Perfil Completo de Personaje
+### 5. Perfil Completo de Personaje
 **Múltiples JOINs Relacionados**
 
 Vista 360° de un personaje específico: info básica, inventario, misiones y transacciones.
 
-### 7. Distribución de Items
-**GROUP BY por Tipo y Rareza**
 
-Análisis de cuántos items existen y quién los tiene.
-
-```sql
-SELECT 
-    i.ItemID, i.Name AS ItemName, i.Type, i.Rarity,
-    COUNT(inv.CharacterID) AS TotalOwners,
-    COALESCE(SUM(inv.Quantity), 0) AS TotalQuantity
-FROM Item i
-LEFT JOIN Inventory inv ON i.ItemID = inv.ItemID
-GROUP BY i.ItemID, i.Name, i.Type, i.Rarity
-```
 
 ## 📁 Estructura del Proyecto
 
